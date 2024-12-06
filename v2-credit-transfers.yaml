@@ -1293,6 +1293,7 @@ paths:
                       domesticAccountCountry: GB
                     requestedExecutionDate: 2016-10-14
                     actualExecutionDate: 2016-10-15
+                    exportDate: 2016-10-15
                     paymentAmount: 5000.01
                     paymentCurrency: EUR
                     endToEndId: 12345678901330w4
@@ -1521,6 +1522,7 @@ paths:
                       domesticAccountCountry: GB
                     requestedExecutionDate: 2016-10-14
                     actualExecutionDate: null
+                    exportDate: null
                     paymentAmount: 5000.01
                     paymentCurrency: EUR
                     endToEndId: 12345678901330w4
@@ -1728,6 +1730,7 @@ paths:
                     domesticAccountCountry: GB
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: 2016-10-15
+                  exportDate: 2016-10-15
                   paymentAmount: 5000.01
                   paymentCurrency: EUR
                   endToEndId: 12345678901330w4
@@ -1916,6 +1919,7 @@ paths:
                       rejectDate: "2024-09-13"
                     requestedExecutionDate: "2024-09-15"
                     actualExecutionDate: null
+                    exportDate: null
                     settlementDateShift: false
                     originatorAccount:
                       iban: "FR7604321134217063850725528"
@@ -2450,6 +2454,7 @@ paths:
                     domesticAccountCountry: GB
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: 2016-10-15
+                  exportDate: 2016-10-15
                   paymentAmount: 5000.01
                   paymentCurrency: EUR
                   endToEndId: 12345678901330w4
@@ -2725,6 +2730,7 @@ paths:
                       domesticAccountCountry: GB
                     requestedExecutionDate: 2016-10-14
                     actualExecutionDate: 2016-10-15
+                    exportDate: 2016-10-15
                     paymentAmount: 5000.01
                     paymentCurrency: EUR
                     endToEndId: 12345678901330w4
@@ -2936,6 +2942,7 @@ paths:
                     domesticAccountCountry: GB
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: null
+                  exportDate: null
                   paymentAmount: 5000.01
                   paymentCurrency: EUR
                   endToEndId: 12345678901330w4
@@ -3143,6 +3150,7 @@ paths:
                     domesticAccountCountry: GB
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: 2016-10-15
+                  exportDate: 2016-10-15
                   paymentAmount: 5000.01
                   paymentCurrency: EUR
                   endToEndId: 12345678901330w4
@@ -3241,6 +3249,199 @@ paths:
         - MerchantOAuth2:
             - credittransfers_read
         - MerchantApiKey: []
+  /v2/credittransfers/{creditTransferId}/recall:
+    post:
+      tags:
+      - Credit Transfers
+      summary: Recall Credit Transfer
+      description: A POST request used to a recall credit transfers. A request must contain the application/json content type. In the request body you must provide a JSON structure describing Credit Transfer Recall request.
+      operationId: recallCreditTransferUsingPOST
+      parameters:
+      - name: JWS-Signature
+        in: header
+        description: The header contains JWS Signature of payload body signed with Private Key of the Sender.  The PKI Key pair generation with Developer Dashboard is prerequisite for the Signature Generation.
+        required: false
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        description: Every request will be processed only once per Idempotency-Key. The Idempotency Key will be valid for 24 hours.
+        schema:
+          maxLength: 50
+          type: string 
+      - name: creditTransferId
+        in: path
+        description: Encoded Credit Transfer ID of the credit transfer to be recalled.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: creditTransferRecallRequest
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditTransferRecallRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestResponseEnvelopeOfCreditTransferResponseEntityV2'
+              example:
+                uri: /credittransfers/a2av38kz2w/recall
+                data:
+                  id: a2av38kz2w
+                  uri: /beneficiaries/abxq9ox92l/credittransfers/a2av38kz2w
+                  originatorAccount:
+                    iban: GB94SELN00999976543215
+                    domesticAccountNumber: "76543215"
+                    domesticBankCode: null
+                    domesticBranchCode: "009999"
+                    domesticCheckSum: null
+                    domesticAccountCountry: GB
+                  requestedExecutionDate: 2016-10-14
+                  actualExecutionDate: 2016-10-15
+                  exportDate: 2016-10-15
+                  paymentAmount: 5000.01
+                  paymentCurrency: EUR
+                  endToEndId: 12345678901330w4
+                  remittanceInformation: Remittance info
+                  structuredRemittanceInformation: null
+                  paymentStatus: RECALLED
+                  type: EXPRESS
+                  paymentScheme: SCT
+                  ultimateCreditor: null
+                  ultimateDebtor: null
+                  beneficiaryName: Beneficiary Name
+                  beneficiaryAccount:
+                    iban: GB47SELN00999912345678
+                    domesticAccountNumber: "12345678"
+                    domesticBankCode: null
+                    domesticBranchCode: "009999"
+                    domesticCheckSum: null
+                    domesticAccountCountry: GB
+                    bic: SELNGB21
+                  rejectDetails:
+                    rejectReason: null
+                    rejectDescription: null
+                    rejectType: null
+                    rejectDate: null
+                  originalBeneficiaryAccount:
+                    iban: null
+                    domesticAccountNumber: null
+                    domesticBankCode: null
+                    domesticBranchCode: null
+                    domesticCheckSum: null
+                    domesticAccountCountry: null
+                    bic: null
+                links:
+                  - rsourceType: beneficiary
+                    id: abxqg83n2l
+                    uri: /beneficiaries/abxqg83n2l
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "8888"
+                returnDescription: Input validation errors occurred. Please check details.
+                details:
+                  code: "7131"
+                  field: recallReason
+                  description: Field is invalid
+                  resourceUri: null
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "10091"
+                returnDescription: Access denied
+                details: null
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "10093"
+                returnDescription: Requested resource is not available
+                details: null
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "415":
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "8888"
+                returnDescription: Input validation errors occurred. Please check
+                  details.
+                details:
+                  code: "XXXX"
+                  field: null
+                  description: Credit Transfer is not in a valid status to be Recalled
+                  resourceUri: null
+        "429":
+          description: Too Many Requests
+          headers:
+            X-Rate-Limit-Reset:
+              description: Number in seconds to wait before retrying request.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+          x-sentenial:
+            enriched: "true"
+      security:
+      - MerchantOAuth2:
+        - credittransfers
+      - MerchantApiKey: []
+      x-codegen-request-body-name: recallCreditTransferRequest
 components:
   schemas:
     AccountIdentificationEntityV2:
@@ -3787,6 +3988,13 @@ components:
           $ref: '#/components/schemas/UltimatePartyEntityV2'
         ultimateDebtor:
           $ref: '#/components/schemas/UltimatePartyEntityV2'
+    CreditTransferRecallRequest:
+      type: object
+      properties:
+        recallReason:
+          maxLength: 140
+          type: string
+          description: Optional reason for recall.
     DateAndPlaceOfBirthEntityV2:
       required:
         - birthDate
@@ -4207,6 +4415,10 @@ components:
           type: string
           description: The actual execution date of the credit transfer, this can be different to the requested execution date if settlement date shift is applied
           format: date
+        exportDate:
+          type: string
+          format: date
+          description: The export date of the credit transfer
         settlementDateShift:
           type: boolean
           description: If true, settlement date shift logic was applied to the credit transfer
