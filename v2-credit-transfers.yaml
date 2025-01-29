@@ -212,25 +212,25 @@ tags:
        * `beneficiaryId`, is the Beneficiary resource ID returned by a variety of beneficiary services including: [Create Beneficiary](#operation/addBeneficiaryUsingPOST), [List Beneficiaries](#operation/listBeneficiariesUsingGET), [Retrieve Beneficiary](#operation/viewBeneficiaryUsingGET)
       
       * `creditTransferId`, is the Credit Transfer resource ID returned by a variety of credit transfers services including: [Create Credit Transfer](#operation/addCreditTransferUsingPOST), [Retrieve Credit Transfer](#operation/viewCreditTransferUsingGET)
-  - name: Credit Transfers Collections
+  - name: Credit Transfers Batches
     description: |-
-      Credit Transfers Collection  API allows to initiate multiple Credit Transfers in single API request.  Credit Transfer Collection is processed asynchronusly and  creates both Credit Transfer Collection and Credit Transfer resources.
+      Credit Transfers Batch API allows to initiate multiple Credit Transfers in single API request.  Credit Transfer Batch is processed asynchronusly and  creates both Credit Transfer Batch and Credit Transfer resources.
       
-      To access credit transfers  collection use the following URL:
+      To access credit transfers batch use the following URL:
       
-      `https://api.nuapay.com//credittransfers/collections/{collectionId}`
-      
-      where
-      
-       * `collectionId`, is the Collection resource ID returned by  [Create Credit Transfer Collection](#operation/addCreditTransferCollectionUsingPOST)
-      
-       Collection processing creates Credit Transfers with requested details.  The credit transfers created under collection can be accessed using following URL:
-      
-      `https://api.nuapay.com//credittransfers/collections/{collectionId}/credittransfers`
+      `https://api.nuapay.com/credittransfers/batches/{creditTransferBatchId}`
       
       where
       
-      * `collectionId`, is the Collection resource ID returned by [Create Credit Transfer Collection](#operation/addCreditTransferCollectionUsingPOST) or  [List Credit Transfer Collections](#operation/listCreditTransferCollectionUsingGET) 
+       * `creditTransferBatchId`, is the Credit Transfer Batch resource ID returned by  [Create Credit Transfer Batch](#operation/addCreditTransferBatchUsingPOST)
+      
+       Credit Transfer Batch processing creates Credit Transfers with requested details.  The credit transfers created under batch can be accessed using following URL:
+      
+      `https://api.nuapay.com/credittransfers/batches/{creditTransferBatchId}/credittransfers`
+      
+      where
+      
+      * `creditTransferBatchId`, is the Credit Transfer Batch resource ID returned by [Create Credit Transfer Batch](#operation/addCreditTransferBatchUsingPOST) or  [List Credit Transfer Batches](#operation/listCreditTransferBatchUsingGET) 
 
   - name: Beneficiaries
     description: |-
@@ -761,7 +761,7 @@ paths:
             type: string
         - name: beneficiaryname
           in: query
-          description: "Name of Beneficiary. Used to filter credit transfers with the provided beneficiary name; full and partial names are supported."
+          description: "Name of Beneficiary. Used to filter beneficiaries with the provided beneficiary name; full and partial names are supported."
           schema:
             maxLength: 70
             type: string
@@ -1829,41 +1829,41 @@ paths:
         - MerchantOAuth2:
             - credittransfers_read
         - MerchantApiKey: []
-  /credittransfers/collections:
+  /credittransfers/batches:
     get:
       tags:
-        - Credit Transfers Collections
-      summary: List Collections
-      description: A GET request used to retrieve all collections matching filters for requesting Organization
-      operationId: listCollectionsUsingGET
+        - Credit Transfers Batches
+      summary: List Credit Transfer Batches
+      description: A GET request used to retrieve all credit transfer batches matching filters for requesting Organization
+      operationId: listBatchesUsingGET
       parameters:
         - name: reference
           in: query
-          description: Used to filter collections by provided reference.
+          description: Used to filter credit transfer batches by provided reference.
           schema:
             maxLength: 35
             type: string
         - name: creationdatetimefrom
           in: query
-          description: Returns collections created from this date. Format yyyy-mm-dd.
+          description: Returns credit transfer batches created from this date. Format yyyy-mm-dd.
           schema:
             type: string
             format: date
         - name: creationdatetimeto
           in: query
-          description: Returns collections created to this date. Format yyyy-mm-dd.
+          description: Returns credit transfer batches created to this date. Format yyyy-mm-dd.
           schema:
             type: string
             format: date
         - name: originatoriban
           in: query
-          description: Used to filter collections by provided originator IBAN.
+          description: Used to filter credit transfer batches by provided originator IBAN.
           schema:
             pattern: "[a-zA-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}"
             type: string
         - name: status
           in: query
-          description: Collection Status information
+          description: Credit Transfer Batch Status information
           style: form
           schema:
             type: array
@@ -1899,12 +1899,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedCreditTransfersCollectionResponseEnvelope'
+                $ref: '#/components/schemas/PaginatedCreditTransfersBatchResponseEnvelope'
               example:
-                uri: "/credittranfers/collections"
+                uri: "/credittranfers/batches"
                 data:
                   - id: "w24y36ao2p"
-                    uri: "/credittransfers/collections/w24y36ao2p"
+                    uri: "/credittransfers/batches/w24y36ao2p"
                     reference: "TX1234567894"
                     batchBooking: false
                     numberOfTransactions: 1
@@ -1928,13 +1928,13 @@ paths:
                       domesticBranchCode: null
                       domesticCheckSum: null
                       domesticAccountCountry: null
-                    collectionStatus: "FAILED"
+                    batchStatus: "FAILED"
                     creationDateTime: "2024-09-13T10:53:09.788Z"
                     lastUpdateDateTime: "2024-09-13T10:53:09.788Z"
                     links:
                       id: null
                       resourceType: credittransfers
-                      uri: /credittransfers/collections/w24y5qgv2p/credittransfers 
+                      uri: /credittransfers/batches/w24y5qgv2p/credittransfers 
                 page:
                  pageNumber: 1
                  totalPages: 1
@@ -2025,12 +2025,12 @@ paths:
         - MerchantApiKey: []
     post:
       tags:
-        - Credit Transfers Collections
-      summary: Create Credit Transfer Collections
+        - Credit Transfers Batches
+      summary: Create Credit Transfer Batches
       description: |
-        A POST request used to create  collection of credit transfers.
-        A request must contain the application/json content type. In the request body, you must provide a JSON structure describing the Credit Transfer collections.
-      operationId: addCreditTransferCollectionUsingPOST
+        A POST request used to create a batch of credit transfers.
+        A request must contain the application/json content type. In the request body, you must provide a JSON structure describing the Credit Transfer batches.
+      operationId: addCreditTransferBatchUsingPOST
       parameters:
         - name: JWS-Signature
           in: header
@@ -2050,24 +2050,24 @@ paths:
             maxLength: 50
             type: string
       requestBody:
-        description: creditTransfersCollection Request
+        description: creditTransfersBatch Request
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditTransfersCollectionRequest'
+              $ref: '#/components/schemas/CreditTransfersBatchRequest'
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditTransfersCollectionResponseEnvelope'
+                $ref: '#/components/schemas/CreditTransfersBatchResponseEnvelope'
               example:
-                uri: "/credittransfers/collections/8b5gl3zz2r"
+                uri: "/credittransfers/batches/8b5gl3zz2r"
                 data:
                   id: "8b5gl3zz2r"
-                  uri: "/credittransfers/collections/8b5gl3zz2r"
+                  uri: "/credittransfers/batches/8b5gl3zz2r"
                   reference: "Reference4"
                   batchBooking: false
                   numberOfTransactions: 1
@@ -2090,7 +2090,7 @@ paths:
                     domesticBranchCode: null
                     domesticCheckSum: null
                     domesticAccountCountry: null
-                  collectionStatus: "QUEUED"
+                  batchStatus: "QUEUED"
                   creationDateTime: "2024-09-17T09:46:19.169Z"
                   lastUpdateDateTime: "2024-09-17T09:46:19.169Z"
                   links: null
@@ -2214,17 +2214,17 @@ paths:
             - credittransfers
         - MerchantApiKey: []
       x-codegen-request-body-name: addCTBeneficiaryOnFlyRequest
-  /credittransfers/collections/{collectionId}:
+  /credittransfers/batches/{creditTransferBatchId}:
     get:
       tags:
-        - Credit Transfers Collections
-      summary: View Collection.
-      description: A GET request used to view detailed information on collection with a given ID.
-      operationId: viewCollectionUsingGET
+        - Credit Transfers Batches
+      summary: View Credit Transfer Batch.
+      description: A GET request used to view detailed information on credit transfer batch with a given ID.
+      operationId: viewBatchUsingGET
       parameters:
-        - name: collectionId
+        - name: creditTransferBatchId
           in: path
-          description: Encoded Collection ID.
+          description: Encoded Credit Transfer Batch ID.
           required: true
           schema:
             type: string
@@ -2234,12 +2234,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditTransfersCollectionResponseEnvelope'
+                $ref: '#/components/schemas/CreditTransfersBatchResponseEnvelope'
               example:
-                uri: /credittransfers/collections/w24y5qgv2p
+                uri: /credittransfers/batches/w24y5qgv2p
                 data:
                   id: "w24y36ao2p"
-                  uri: "/credittransfers/collections/w24y36ao2p"
+                  uri: "/credittransfers/batches/w24y36ao2p"
                   reference: "TX1234567894"
                   batchBooking: false
                   numberOfTransactions: 1
@@ -2262,13 +2262,13 @@ paths:
                     domesticBranchCode: null
                     domesticCheckSum: null
                     domesticAccountCountry: null
-                  collectionStatus: "FAILED"
+                  batchStatus: "FAILED"
                   creationDateTime: "2024-09-13T10:53:09.788Z"
                   lastUpdateDateTime: "2024-09-13T10:53:09.788Z"
                 links:
                     id: null
                     resourceType: credittransfers
-                    uri: /credittransfers/collections/w24y5qgv2p/credittransfers 
+                    uri: /credittransfers/batches/w24y5qgv2p/credittransfers 
         "400":
           description: Bad Request
           content:
@@ -2351,17 +2351,17 @@ paths:
         - MerchantOAuth2:
             - credittransfers_read
         - MerchantApiKey: []
-  /credittransfers/collections/{collectionId}/credittransfers:
+  /credittransfers/batches/{creditTransferBatchId}/credittransfers:
     get:
       tags:
-      - Credit Transfers Collections
-      summary: List Collection Credit Transfers
-      description: A GET request used to retrieve a collection of credit transfers. This request can be used to list all credit transfers associated to a collection
-      operationId: listCreditTransfersCollectionUsingGET
+      - Credit Transfers Batches
+      summary: List Credit Transfers of Credit Transfers Batch
+      description: A GET request used to retrieve a batch of credit transfers. This request can be used to list all credit transfers associated to a batch
+      operationId: listCreditTransfersBatchUsingGET
       parameters:
-      - name: collectionId
+      - name: creditTransferBatchId
         in: path
-        description: Encoded Collection ID of the collection which credit transfers are to be viewed.
+        description: Encoded Credit Transfers Batch ID of the batch which credit transfers are to be viewed.
         required: true
         schema:
           type: string
@@ -2441,7 +2441,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RestPaginatedCollectionResponseEnvelopeOfCreditTransferResponseEntityV2'
               example:
-                uri: /collections/w24y5qgv2p/credittransfers
+                uri: /credittransfers/batches/w24y5qgv2p/credittransfers
                 data:
                 - id: a2av38kz2w
                   uri: /v2/credittransfers/a2av38kz2w
@@ -2546,7 +2546,7 @@ paths:
           description: Accepted 
           content: {}       
         "400":
-          description: Bad request
+          description: Bad Request
           content:
             application/json:
               schema:
@@ -3828,13 +3828,13 @@ components:
           maxLength: 35
           type: string
           description: The encoded Verification ID from the Account Verification Request to link to this Beneficiary.
-    PaginatedCreditTransfersCollectionResponseEnvelope:
+    PaginatedCreditTransfersBatchResponseEnvelope:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CreditTransfersCollection'
+            $ref: '#/components/schemas/CreditTransfersBatch'
         page:
           $ref: '#/components/schemas/RestResponsePaginationDetailsV2'
         sort:
@@ -3844,15 +3844,15 @@ components:
         uri:
           type: string
           description: Resource Uri
-    CreditTransfersCollectionResponseEnvelope:
+    CreditTransfersBatchResponseEnvelope:
       type: object
       properties:
         uri:
           type: string
           description: Resource Uri
         data:
-          $ref: '#/components/schemas/CreditTransfersCollection'
-    CreditTransfersCollectionRequest:
+          $ref: '#/components/schemas/CreditTransfersBatch'
+    CreditTransfersBatchRequest:
       required:
         - numberOfTransactions
         - totalAmount
@@ -3864,49 +3864,48 @@ components:
         reference:
           maxLength: 35
           type: string
-          description: Collection reference number. If not provided will be generated as UUID.
+          description: Credit Transfer Batch reference number. If not provided will be generated as UUID.
         batchBooking:
           type: boolean
           default: false
-          description: Applies only for Credit Transfer Collections processed via Nuapay Account.  If set to true for the accounts  there will be single booking made for whole amount of collection if there are sufficient funds.  Not enough funds for whole collection amount will result in rejection of whole collection.
+          description: Applies only for Credit Transfer Batches processed via Nuapay Account.  If set to true for the accounts there will be single booking made for whole amount of batch if there are sufficient funds.  Not enough funds for whole batch amount will result in rejection of whole batch.
         numberOfTransactions:
           minimum: 1
           maxLength: 100000
           type: integer
           format: int32
-          description: Number of Credit Transfers in the collection. The number must be same as actual Credit Transfers number supplied in the request.
+          description: Number of Credit Transfers in the batch. The number must be same as actual Credit Transfers number supplied in the request.
         totalAmount:
           minimum: 0.01
           maxLength: 99999999999999999.99
           type: number
-          description: Total amount of Credit Transfers in the collection. Decimal separator is '.'. Max two decimal places allowed.
+          description: Total amount of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
         currency:
           type: string
-          description: Collection Currency.  The currency will be applied for all the Credit Transfers in the Collection
+          description: Credit Transfer Batch Currency.  The currency will be applied for all the Credit Transfers in the Batch
           enum:
             - EUR
             - GBP
         type:
           type: string
           description: |-
-            Collection Type.  All Credit Transfers in the collection will inherit the type.  If not provided below defaulting rules apply
-           
-            Collection Currency  | Originator Account | Default Type 
-            ---------- | ------- | ------- 
-            EUR | Nuapay Account | STANDARD
-            EUR | Non Nuapay Account | STANDARD
-            GBP | Nuapay Account | EXPRESS
-            GBP | Non Nuapay Account | STANDARD
+            Credit Transfer Batch Type.  All Credit Transfers in the batch will inherit the type.  If not provided below defaulting rules apply
+
+            ||Credit Transfer Batch Currency || Originator Account|| Default Type||
+            |EUR|Nuapay Account| STANDARD|
+            |EUR|Non Nuapay Account| STANDARD|
+            |GBP|Nuapay Account| EXPRESS|
+            |GBP|Non Nuapay Account| STANDARD|
           enum:
             - STANDARD
             - EXPRESS
         categoryPurpose:
           type: string
           pattern: "^[A-Z0-9]{4}$"
-          description: Category Purpose   will get applied to all Credit Transfers in the collection provided.
+          description: Category Purpose   will get applied to all Credit Transfers in the batch provided.
         requestedExecutionDate:
           type: string
-          description: Requested Execution Date of Credit Transfers in the Collection. If not provided will default to Current Processing Date
+          description: Requested Execution Date of Credit Transfers in the Credit Transfer Batch. If not provided will default to Current Processing Date
         settlementDateShift:
           type: boolean
           description: If provided Settlement Date Shif is applied to the Requested Execution Date provided. The logic is same as for individual Credit Transfer >> https://jira.nuapay.cloud/jira/secure/attachment/127011/127011_Create_CT_COT_Logic.png
@@ -3915,7 +3914,7 @@ components:
         creditTransferTransactionInformation:
           type: array
           items:
-            $ref: '#/components/schemas/CreditTransferCollectionsTransactionInformationV2'
+            $ref: '#/components/schemas/CreditTransferBatchesTransactionInformationV2'
           minItems: 1
       example: 
         reference: "Reference4"
@@ -3958,7 +3957,7 @@ components:
             endToEndId: "1241251412"
             paymentAmount: 0.01
             remittanceInformation: "remittance"
-    CreditTransferCollectionsTransactionInformationV2:
+    CreditTransferBatchesTransactionInformationV2:
       required:
         - beneficiary
         - beneficiaryAccount
@@ -4145,7 +4144,7 @@ components:
       properties:
         rejectDate:
           type: string
-          description: The date the credit transfer/collection was rejected/failed
+          description: The date the credit transfer/batch was rejected/failed
           format: date
         rejectDescription:
           maxLength: 140
@@ -4171,7 +4170,7 @@ components:
             - Refund Reject
             - Import_Reject
             - Failure
-    CreditTransfersCollection:
+    CreditTransfersBatch:
       type: object
       properties:
         id:
@@ -4183,32 +4182,32 @@ components:
           maxLength: 35
         reference:
           type: string
-          description: Collection reference number. If not provided will be generated as UUID.
+          description: Credit Transfer Batch reference number. If not provided will be generated as UUID.
         batchBooking:
           type: boolean
           default: false
-          description: Applies only for Credit Transfer Collections processed via Nuapay Account.  If set to true for the accounts  there will be single booking made for whole amount of collection if there are sufficient funds.  Not enough funds for whole collection amount will result in rejection of whole collection.
+          description: Applies only for Credit Transfer Batches processed via Nuapay Account. If set to true for the accounts there will be single booking made for whole amount of batch if there are sufficient funds.  Not enough funds for whole batch amount will result in rejection of whole batch.
         numberOfTransactions:
           minimum: 1
           type: integer
           format: int32
-          description: Number of Credit Transfers in the collection. The number must be same as actual Credit Transfers number supplied in the request.
+          description: Number of Credit Transfers in the batch. The number must be same as actual Credit Transfers number supplied in the request.
         totalAmount:
           minimum: 0.01
           type: number
-          description: Total amount of Credit Transfers in the collection. Decimal separator is '.'. Max two decimal places allowed.
+          description: Total amount of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
         currency:
           type: string
-          description: Collection Currency.  The currency will be applied for all the Credit Transfers in the Collection
+          description: Credit Transfer Batch Currency.  The currency will be applied for all the Credit Transfers in the Credit Transfer Batch
           enum:
             - EUR
             - GBP
         type:
           type: string
           description: |-
-            Collection Type.  All Credit Transfers in the collection will inherit the type.  If not provided below defaulting rules apply
+            Credit Transfer Batch Type.  All Credit Transfers in the batch will inherit the type.  If not provided below defaulting rules apply
 
-            ||Collection Currency || Originator Account|| Default Type||
+            ||Credit Transfer Batch Currency || Originator Account|| Default Type||
             |EUR|Nuapay Account| STANDARD|
             |EUR|Non Nuapay Account| STANDARD|
             |GBP|Nuapay Account| EXPRESS|
@@ -4219,12 +4218,12 @@ components:
         categoryPurpose:
           type: string
           pattern: "^[A-Z0-9]{4}$"
-          description: Category Purpose   will get applied to all Credit Transfers in the collection provided.
+          description: Category Purpose   will get applied to all Credit Transfers in the batch provided.
         rejectDetails:
           $ref: '#/components/schemas/RejectDetailsResponseV2'
         requestedExecutionDate:
           type: string
-          description: Requested Execution Date of Credit Transfers in the Collection. If not provided will default to Current Processing Date
+          description: Requested Execution Date of Credit Transfers in the Credit Transfer Batch. If not provided will default to Current Processing Date
         actualExecutionDate:
           type: string
           format: date
@@ -4234,9 +4233,9 @@ components:
           description: If provided Settlement Date Shif is applied to the Requested Execution Date provided. The logic is same as for individual Credit Transfer >> https://jira.nuapay.cloud/jira/secure/attachment/127011/127011_Create_CT_COT_Logic.png
         originatorAccount:
           $ref: '#/components/schemas/AccountIdentificationEntityV2'
-        collectionStatus:
+        batchStatus:
           type: string
-          description: Collection Status information
+          description: Credit Transfer Batch Status information
           enum:
             - QUEUED
             - REJECTED
@@ -4249,11 +4248,11 @@ components:
         creationDateTime:
           type: string
           format: date-time
-          description: Collection creation date time
+          description: Credit Transfer Batch creation date time
         lastUpdateDateTime:
           type: string
           format: date-time
-          description:  Collection last update date time
+          description:  Credit Transfer Batch last update date time
         links:
           type: array
           items:
@@ -4604,7 +4603,7 @@ x-tagGroups:
     tags:
       - Beneficiaries
       - Credit Transfers
-      - Credit Transfers Collections
+      - Credit Transfers Batches
   - name: Responses
     tags:
       - About Responses
