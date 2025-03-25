@@ -3871,7 +3871,7 @@ components:
           description: Applies only for Credit Transfer Batches processed via Nuapay Account.  If set to true for the accounts there will be single booking made for whole amount of batch if there are sufficient funds.  Not enough funds for whole batch amount will result in rejection of whole batch.
         numberOfTransactions:
           minimum: 1
-          maxLength: 100000
+          maxLength: 25000
           type: integer
           format: int32
           description: Number of Credit Transfers in the batch. The number must be same as actual Credit Transfers number supplied in the request.
