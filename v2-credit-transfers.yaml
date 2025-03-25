@@ -3871,15 +3871,15 @@ components:
           description: Applies only for Credit Transfer Batches processed via Nuapay Account.  If set to true for the accounts there will be single booking made for whole amount of batch if there are sufficient funds.  Not enough funds for whole batch amount will result in rejection of whole batch.
         numberOfTransactions:
           minimum: 1
-          maxLength: 25000
+          maximum: 25000
           type: integer
           format: int32
           description: Number of Credit Transfers in the batch. The number must be same as actual Credit Transfers number supplied in the request.
         totalAmount:
           minimum: 0.01
-          maxLength: 99999999999999999.99
+          maximum: 99999999999999999.99
           type: number
-          description: Total amount of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
+          description: Total value of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
         currency:
           type: string
           description: Credit Transfer Batch Currency.  The currency will be applied for all the Credit Transfers in the Batch
