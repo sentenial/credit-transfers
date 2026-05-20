@@ -13,7 +13,7 @@ info:
   license:
     name: For internal use only
     url: https://sentenial.com
-  version: 1.0.0
+  version: 1.0.7
   x-logo:
     backgroundColor: '#FFFFFF'
     url: https://www.nuapay.com/wp-content/uploads/2018/04/nuapay.svg
@@ -304,12 +304,11 @@ tags:
       Code | Description 
       ---- | ----------- 
       5001 | Invalid Beneficiary Account Details <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-      5004 | Beneficiary Country Required if any other Address element is provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-      5005 | Invalid Beneficiary e-mail address provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
+      5004 | Beneficiary Country and Town are required if any other Address element is provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      5005 | Invalid Beneficiary e-mail address provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
       5006 | Payment Amount Invalid  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
       5007 | Originator Account provided does not exist, or is not in a valid status <em>[Create credit transfer](#create-credit-transfer)</em>
       5009 | Invalid Date for Payment  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-      5010 | Address Line 1 is not allowed when Street Name is provided.
       5017 | Originator account currency does not match payment currency <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
       7001 | Date format invalid <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
       7002 | 'From Date ' must be earlier or equal to 'To Date' <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
@@ -371,7 +370,8 @@ tags:
       7173 | Address Street Name is invalid or max length is exceeded
       7174 | Address Building Number is invalid or max length is exceeded
       7175 | Type is invalid, must be one of the allowed values from the ENUM
-      7201 | JWS-Signature is invalid. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>   (possibly done in GK - check with arch)
+      7200 | JWS-Signature header is required. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      7201 | JWS-Signature is invalid. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
       7300 | UltimateParty Name' is invalid or max length is exceeded. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
       7301 | UltimateParty Other SchemeName Code' is Invalid. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
       7302 | UltimateParty Other SchemeName Proprietary' is Invalid. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
@@ -397,6 +397,11 @@ tags:
       7341 | UltimateParty PrivateId CityOfBirth' is required. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
       7353 | Creditor Reference is invalid or max length is exceeded
       7354 | StructuredRemittanceInformation cannot be provided in addition to RemittanceInformation
+      7359 | Provided Account Verification is not in a valid status, status is Pending <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      7360 | Provided Account Verification is not in a valid status, status is Failed <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      7361 | Failed to retrieve Account Verification, please try again later <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      7362 | Account from the Account Verification does not match Beneficiary account Provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+      7363 | Verification method must be 'ACCOUNT_HOLDER_VERIFICATION' when linking a verification to a beneficiary <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
       9002 | None-SEPA country IBAN has been provided
       10093 | Requested resource is not available
   - name: Asynchronous Error Codes
@@ -639,7 +644,7 @@ paths:
                   totalElements: 1
                   totalPages: 1
                 sort: []
-        400:
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -653,7 +658,7 @@ paths:
                     field: "filter.executionDateFrom"
                     description: Date format invalid
                     resourceUri: null
-        401:
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -664,7 +669,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        403:
+        "403":
           description: Forbidden
           content:
             application/json:
@@ -675,7 +680,7 @@ paths:
                   returnCode: "10091"
                   returnDescription: Access denied
                   details: null
-        404:
+        "404":
           description: Not Found
           content:
             application/json:
@@ -686,7 +691,7 @@ paths:
                   returnCode: "10093"
                   returnDescription: Requested resource is not available
                   details: null
-        405:
+        "405":
           description: Method Not Allowed
           content:
             application/json:
@@ -697,7 +702,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        415:
+        "415":
           description: Unsupported Media Type
           content:
             application/json:
@@ -708,7 +713,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        422:
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -722,7 +727,7 @@ paths:
                     - code: "7002"
                       description: "'From Date' must be earlier or equal to 'To Date'"
                       resourceUri: null
-        429:
+        "429":
           description: Too Many Requests
           x-sentenial:
             enriched: "true"
@@ -764,6 +769,24 @@ paths:
           description: "Name of Beneficiary. Used to filter beneficiaries with the provided beneficiary name; full and partial names are supported."
           schema:
             maxLength: 70
+            type: string
+        - name: domesticaccountnumber
+          in: query
+          description: Beneficiary Domestic Account Number.
+          schema:
+            maxLength: 20
+            type: string
+        - name: domesticbankcode
+          in: query
+          description: Beneficiary Domestic Account Bank Code.
+          schema: 
+            maxLength: 10
+            type: string
+        - name: domesticbranchcode
+          in: query
+          description: Beneficiary Domestic Account Branch Code.
+          schema:
+            maxLength: 10
             type: string
         - name: orderby
           in: query
@@ -974,25 +997,31 @@ paths:
                   beneficiary:
                     name: Beneficiary Name
                     address:
-                      line1: Beneficiary Address Line1
+                      line1: Address Line1
                       line2: Beneficiary Address Line2
                       town: Beneficiary Town
                       postCode: "123123"
                       state: Beneficiary State
-                      country: IE
+                      country: GB
                     language: en
                     email: beneficiary@mail.com
                     mobileNumber: "0360321321321"
                     phoneNumber: "0360123123123"
-                    descriptionOfPurpose: Description of Purpose
+                    descriptionOfPurpose: Purpose
+                    lei: "549300V3I7L8A8E8T1D0"
+                    accountVerificationId: "jwmjjx6rmg"
                   beneficiaryAccount:
-                    iban: GB47SELN00999912345678
-                    bic: SELNGB21
-                    domesticAccountNumber: "12345678"
+                    iban: "NL98RABO1812144628"
+                    bic: "RABONL2U"
+                    domesticAccountNumber: null
                     domesticBankCode: null
-                    domesticBranchCode: "009999"
+                    domesticBranchCode: null
                     domesticCheckSum: null
-                    domesticAccountCountry: GB
+                    domesticAccountCountry: "NL"
+                    accountProxy: 
+                      id: null
+                      code: null
+                      proprietary: null
                   links: []
         "400":
           description: Bad Request
@@ -1184,6 +1213,176 @@ paths:
         - MerchantOAuth2:
             - beneficiaries_read
         - MerchantApiKey: []
+    patch:
+      tags:
+        - Beneficiaries
+      summary: Update Existing Beneficiary
+      description: A PATCH request used to update an existing beneficiary's details.
+      operationId: UpdateBeneficiaryUsingPATCH
+      parameters:
+        - name: beneficiaryId
+          in: path
+          description: Encoded ID of the beneficiary to be updated.
+          required: true
+          schema:
+            type: string
+        - name: JWS-Signature
+          in: header
+          description: JWS-Signature
+          required: true
+          schema:
+            type: string
+        - name: Idempotency-Key
+          in: header
+          description: Every request will be processed only once per Idempotency-Key. The Idempotency Key will be valid for 24 hours.
+          schema:
+            maxLength: 50
+            type: string
+      requestBody:
+        description: Update for existing beneficiary.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBeneficiaryRequestEntityV2'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestResponseEnvelopeOfUpdateBeneficiaryResponseEntityV2'
+              example:
+                uri: /beneficiaries/46pkx7o9n5
+                data:
+                  id: 46pkx7o9n5
+                  uri: /beneficiaries/46pkx7o9n5
+                  beneficiary:
+                    name: Updated Beneficiary Name
+                    address:
+                      line1: Address Line1
+                      line2: Beneficiary Address Line2
+                      town: Beneficiary Town
+                      postCode: "123123"
+                      state: Beneficiary State
+                      country: GB
+                    language: en
+                    email: beneficiary@mail.com
+                    mobileNumber: "0360321321321"
+                    phoneNumber: "0360123123123"
+                    descriptionOfPurpose: Purpose
+                    lei: "549300V3I7L8A8E8T1D0"
+                    accountVerificationId: "jwmjjx6rmg"
+                  beneficiaryAccount:
+                    iban: "NL98RABO1812144628"
+                    bic: "RABONL2U"
+                    domesticAccountNumber: null
+                    domesticBankCode: null
+                    domesticBranchCode: null
+                    domesticCheckSum: null
+                    domesticAccountCountry: "NL"
+                    accountProxy: 
+                      id: null
+                      code: null
+                      proprietary: null
+                  links: []
+        "400":
+              description: Bad Request
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ErrorResponseV2'
+                  example:
+                    returnCode: "8888" 
+                    returnDescription: "Input validation errors occurred. Please check details."
+                    details: 
+                      - code: "7100" 
+                        field: "beneficiary.name" 
+                        description: "Beneficiary Name is invalid or exceeds max length."
+                        resourceUri: null
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "7201"
+                returnDescription: JWS-Signature is invalid.
+                details: null
+        "404":
+            description: Not Found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponseV2'
+                example:
+                  returnCode: "10093"
+                  returnDescription: Requested resource is not available
+                  details: null        
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "415":
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: "5004"
+                returnDescription: Beneficiary Country and Town are required if any other Address element is provided
+                details: null      
+        "429":
+          description: Too Many Requests
+          headers:
+            X-Rate-Limit-Reset:
+              description: Number in seconds to wait before retrying request.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseV2'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+          x-sentenial:
+            enriched: "true"
+      security:
+      - MerchantOAuth2:
+        - beneficiaries
+      - MerchantApiKey: []
+      x-codegen-request-body-name: updateBeneficiaryRequest
   /v2/beneficiaries/{beneficiaryId}/credittransfers:
     get:
       tags:
@@ -3575,6 +3774,10 @@ components:
           $ref: '#/components/schemas/UltimatePartyEntityV2'
         ultimateDebtor:
           $ref: '#/components/schemas/UltimatePartyEntityV2'
+        accountVerificationId:
+          maxLength: 35
+          type: string
+          description: The encoded Verification ID from the Account Verification Request.
       example:
         originatorAccount:
           iban: GB94SELN00999976543215
@@ -3739,6 +3942,12 @@ components:
           description: Account BIC
         accountProxy:
           $ref: '#/components/schemas/AccountProxy'
+        accountType:
+          type: string
+          enum:
+            - BUSINESS
+            - PERSONAL
+          description: Indicates if the account is a `BUSINESS` or `PERSONAL` account. Needed for COP
     BeneficiaryAddressEntityV2:
       type: object
       properties:
@@ -3750,14 +3959,34 @@ components:
           maxLength: 70
           type: string
           description: Beneficiary Address Line 2
+        department:
+          type: string
+          description: Identification of a division of a large organisation or building.
+          maxLength: 70
+        subDepartment:
+          type: string
+          description: Identification of a sub-division of a large organisation or building.
+          maxLength: 70        
         town:
           maxLength: 35
           type: string
           description: Beneficiary Address City/Town
+        townLocationName:
+          type: string
+          description: Specific location name within the town.
+          maxLength: 35
+        districtName:
+          type: string
+          description: Identifies a subdivision within a country sub-division (e.g., county, region).
+          maxLength: 35
         postCode:
           maxLength: 16
           type: string
           description: Beneficiary Address Post Code
+        postBox:
+          type: string
+          description: Numbered box in a post office, assigned to a person or organisation.
+          maxLength: 16
         state:
           maxLength: 35
           type: string
@@ -3769,12 +3998,24 @@ components:
           description: Two letter ISO country code.
         streetName:
           type: string
-          description: Name of a street or thoroughfare. Use the field instead or `line1` to provide name of the street. If both provided your request will be rejected.
+          description: Name of a street or thoroughfare.
           maxLength: 70
         buildingNumber:
           type: string
           description: Number that identifies the position of a building on a street.
-          maxLength: 16
+          maxLength: 16 
+        buildingName:
+          type: string
+          description: Name of the building or house.
+          maxLength: 35
+        floor:
+          type: string
+          description: Floor or storey within a building.
+          maxLength: 70
+        room:
+          type: string
+          description: Building room number.
+          maxLength: 70
     BeneficiaryRestEntityV2:
       required:
         - name
@@ -3791,6 +4032,8 @@ components:
           pattern: .*@.*
           type: string
           description: Beneficiary Email Address
+        identification:
+          $ref: '#/components/schemas/PartyEntityV2'
         language:
           type: string
           description: Communication language
@@ -3827,7 +4070,7 @@ components:
         accountVerificationId:
           maxLength: 35
           type: string
-          description: The encoded Verification ID from the Account Verification Request to link to this Beneficiary.
+          description: The encoded Verification ID from the Account Verification Request.
     PaginatedCreditTransfersBatchResponseEnvelope:
       type: object
       properties:
@@ -3871,7 +4114,7 @@ components:
           description: Applies only for Credit Transfer Batches processed via Nuapay Account.  If set to true for the accounts there will be single booking made for whole amount of batch if there are sufficient funds.  Not enough funds for whole batch amount will result in rejection of whole batch.
         numberOfTransactions:
           minimum: 1
-          maximum: 25000
+          maximum: 100000
           type: integer
           format: int32
           description: Number of Credit Transfers in the batch. The number must be same as actual Credit Transfers number supplied in the request.
@@ -3879,7 +4122,7 @@ components:
           minimum: 0.01
           maximum: 99999999999999999.99
           type: number
-          description: Total value of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
+          description: Total amount of Credit Transfers in the batch. Decimal separator is '.'. Max two decimal places allowed.
         currency:
           type: string
           description: Credit Transfer Batch Currency.  The currency will be applied for all the Credit Transfers in the Batch
@@ -4003,18 +4246,23 @@ components:
       properties:
         birthDate:
           type: string
-          description: Ultimate Creditor/Debtor Birth Date, in format YYYY-MM-DD.
+          description: Party Birth Date, in format YYYY-MM-DD.
           format: date
         cityOfBirth:
           maxLength: 35
           minLength: 1
           type: string
-          description: Ultimate Creditor/Debtor City of Birth
+          description: Party City of Birth
+        provinceOfBirth:
+          maxLength: 35
+          minLength: 1
+          type: string
+          description: Party Province of Birth        
         countryOfBirth:
           maxLength: 2
           minLength: 1
           type: string
-          description: Ultimate Creditor/Debtor country of birthm ISO3166-1 alpha-2
+          description: Party country of birthm ISO3166-1 alpha-2
             country code.
     ErrorDetailV2:
       title: ErrorDetail
@@ -4103,7 +4351,7 @@ components:
         bicOrBei:
           pattern: "[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"
           type: string
-          description: The ultimate creditor/debtor bic.
+          description: The Party bic.
         other:
           $ref: '#/components/schemas/OtherEntityV2'
         lei:
@@ -4111,8 +4359,44 @@ components:
           minLength: 20
           pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"   
           type: string
-          description: Beneficiary legal entity identifier
+          description: Legal entity identifier
       description: Either 'LEI', 'BIC or BEI' or one occurrence of 'Other' is allowed.
+    OriginalBeneficiaryAccountIdentificationEntityV2:
+      type: object
+      properties:
+        iban:
+          pattern: "[a-zA-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}"
+          type: string
+          description: Account IBAN
+        domesticAccountNumber:
+          maxLength: 20
+          minLength: 1
+          type: string
+          description: Domestic Account Number
+        domesticBankCode:
+          maxLength: 10
+          minLength: 1
+          type: string
+          description: Domestic Bank Code
+        domesticBranchCode:
+          maxLength: 10
+          minLength: 1
+          type: string
+          description: Domestic Branch Code
+        domesticCheckSum:
+          maxLength: 2
+          minLength: 1
+          type: string
+          description: Domestic Check Sum
+        domesticAccountCountry:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: Domestic Account Country. 2 letter ISO country code
+        bic:
+          pattern: "[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"
+          type: string
+          description: Account BIC
     OtherEntityV2:
       required:
         - id
@@ -4122,12 +4406,12 @@ components:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other ID
+          description: Other ID
         issuer:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other Issuer
+          description: Other Issuer
         schemeName:
           $ref: '#/components/schemas/SchemeNameEntityV2'
     PrivateIdEntityV2:
@@ -4440,16 +4724,44 @@ components:
         rejectDetails:
           $ref: '#/components/schemas/RejectDetailsResponseV2'
         originalBeneficiaryAccount:
-          $ref: '#/components/schemas/BeneficiaryAccountIdentificationEntityV2'
+          $ref: '#/components/schemas/OriginalBeneficiaryAccountIdentificationEntityV2'
         accountVerificationId:
           maxLength: 35
           type: string
-          description: The encoded Verification ID from the Account Verification Request to link to this Beneficiary.
+          description: The encoded Verification ID from the Account Verification Request.
     RestResponseEnvelopeOfAddBeneficiaryResponseEntityV2:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/RestResponseEnvelopeInnerOfAddBeneficiaryResponseEntityV2'
+        uri:
+          type: string
+          description: Resource Uri
+    RestResponseEnvelopeOfUpdateBeneficiaryResponseEntityV2:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RestResponseEnvelopeInnerOfUpdateBeneficiaryResponseEntityV2'
+        uri:
+          type: string
+          description: Resource Uri
+    RestResponseEnvelopeInnerOfUpdateBeneficiaryResponseEntityV2:
+      required:
+        - beneficiary
+        - beneficiaryAccount
+      type: object
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/BeneficiaryRestEntityV2'
+        beneficiaryAccount:
+          $ref: '#/components/schemas/BeneficiaryAccountIdentificationEntityV2'
+        id:
+          type: string
+          description: Resource Id
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestResponseLinkV2'
         uri:
           type: string
           description: Resource Uri
@@ -4509,12 +4821,12 @@ components:
           maxLength: 4
           minLength: 1
           type: string
-          description: Private ID Other Scheme Name Code, ENUM based on ISO external code set 'ExternalPersonIdentification1Code'.
+          description: Other Scheme Name Code, ENUM based on ISO external code set 'ExternalPersonIdentification1Code'.
         proprietary:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other Scheme Name Proprietary
+          description: Other Scheme Name Proprietary
       description: One instance of 'Scheme Name Code' or 'Scheme Name Proprietary'
         is allowed.
     UltimatePartyEntityV2:
@@ -4528,6 +4840,82 @@ components:
           $ref: '#/components/schemas/OrganisationIdEntityV2'
         privateId:
           $ref: '#/components/schemas/PrivateIdEntityV2'
+    PartyEntityV2:
+      type: object
+      properties:
+        organisationId:
+          $ref: '#/components/schemas/OrganisationIdEntityV2'
+        privateId:
+          $ref: '#/components/schemas/PrivateIdEntityV2'
+    UpdateBeneficiaryRequestEntityV2:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/BeneficiaryAddressEntityV2'
+        descriptionOfPurpose:
+          maxLength: 140
+          type: string
+          description: Purpose for the Beneficiary update
+        email:
+          maxLength: 254
+          pattern: .*@.*
+          type: string
+          description: Beneficiary Email Address
+        identification:
+          $ref: '#/components/schemas/PartyEntityV2'
+        language:
+          type: string
+          description: Communication language
+          enum:
+            - en
+            - pt
+            - nl
+            - fr
+            - it
+            - es
+            - de
+            - sk
+            - fr_BE
+            - nl_BE
+        mobileNumber:
+          maxLength: 30
+          type: string
+          description: Beneficiary Mobile Number
+        name:
+          maxLength: 70
+          minLength: 1
+          type: string
+          description: Beneficiary Name
+        phoneNumber:
+          maxLength: 30
+          type: string
+          description: Beneficiary Phone Number
+        lei:
+          maxLength: 20
+          minLength: 20
+          pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
+          type: string
+          description: Beneficiary legal entity identifier
+        accountVerificationId:
+          maxLength: 35
+          type: string
+          description: The encoded Verification ID from the Account Verification Request.
+      example:
+          name: Beneficiary Name
+          address:
+            line1: Beneficiary Address Line1
+            line2: Beneficiary Address Line2
+            town: Beneficiary Town
+            postCode: "123123"
+            state: Beneficiary State
+            country: IE
+          language: en
+          email: beneficiary@mail.com
+          phoneNumber: "0360123123123"
+          mobileNumber: "0360321321321"
+          descriptionOfPurpose: Description of Purpose
+          lei: "549300V3I7L8A8E8T1D0"
+          accountVerificationId: "jwmjjx6rmg"
     StructuredRemittanceInformationV2:
       type: object
       properties:
@@ -4549,41 +4937,6 @@ components:
             beneficiaries_read: Beneficiaries Read Access
             credittransfers: Credit Transfer Write Access
             credittransfers_read: Credit Transfers Read Access
-            origix_internal: Internal Services Read Access
-    PartnerOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    PartnerApiKey:
-      type: http
-      scheme: basic
-    PartnerGroupApiKey:
-      type: http
-      scheme: basic
-    PartnerGroupOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    AdminOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    SystemOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
 x-tagGroups:
   - name: Generial Info
     tags:
