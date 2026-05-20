@@ -275,8 +275,8 @@ tags:
     ---- | ----------- 
     5001 | Invalid Beneficiary Account Details <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     5002 | Duplicate Beneficiary Account Details Provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    5004 | Beneficiary Country Required if any other Address element is provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    5005 | Invalid Beneficiary e-mail address provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
+    5004 | Beneficiary Country and Town are required if any other Address element is provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    5005 | Invalid Beneficiary e-mail address provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
     5006 | Payment Amount Invalid  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     5007 | Originator Account provided does not exist  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     5008 | Invalid Payment Reference  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
@@ -287,14 +287,14 @@ tags:
     5017 | Originator account currency does not match payment currency <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     7001 | Date format invalid <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
     7002 | 'From Date ' must be earlier or equal to 'To Date' <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
-    7011 | Address Line1 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7012 | Address Line2 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7013 | Address Town is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7014 | Address Postal Code is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7015 | Address State is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7016 | Address ISO Country Code is invalid <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7019 | Phone Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7020 | Mobile Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
+    7011 | Address Line1 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7012 | Address Line2 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7013 | Address Town is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7014 | Address Postal Code is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7015 | Address State is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7016 | Address ISO Country Code is invalid <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7019 | Phone Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7020 | Mobile Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
     7052 | Page size is invalid <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET), [List Transactions](#operation/listTransactionsUsingPOSTs)</em>
     7063 | Payment Status is invalid <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
     7081 | Beneficiary IBAN is invalid <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
@@ -312,7 +312,7 @@ tags:
     7093 | Payment Currency is invalid <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     7094 | Beneficiary account is not reachable for GBP currency <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     7096 | Description of Purpose is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7100 | Beneficiary Name is invalid or max length is exceeded <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [Create beneficiary](#operation/addBeneficiaryUsingPOST), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>															  
+    7100 | Beneficiary Name is invalid or max length is exceeded <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [Create beneficiary](#operation/addBeneficiaryUsingPOST), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>															  
     7111 | Originator IBAN is invalid <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     7112 | Insufficient Funds <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
     7113 | Transfer Failed. Please try again later  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
@@ -342,85 +342,8 @@ tags:
     7168 | Credit transfer not allowed at the moment due to account settlement. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
     7169 | Requested Execution Date is not far enough in the future <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
     7170 | End to End ID invalid, for GBP Standard payments must follow [A-Z0-9-/.& ]{0,18} <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7200 | JWS-Signature header is required. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7201 | JWS-Signature is invalid. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7203 | Field is invalid or max length is exeeded <em>Multiple endpoints.  <em>Response details.field indicates the request property the error is related to</em>
-    5001 | Invalid Beneficiary Account Details <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5002 | Duplicate Beneficiary Account Details Provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    5004 | Beneficiary Country Required if any other Address element is provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    5005 | Invalid Beneficiary e-mail address provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    5006 | Payment Amount Invalid  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5007 | Originator Account provided does not exist  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5008 | Invalid Payment Reference  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5009 | Invalid Date for Payment  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5014 | Transfer Failed. Please try again later <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5015 | Transfer Failed. Please contact support <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5016 | Insufficient Funds <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    5017 | Originator account currency does not match payment currency <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7001 | Date format invalid <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
-    7002 | 'From Date ' must be earlier or equal to 'To Date' <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
-    7011 | Address Line1 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7012 | Address Line2 is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7013 | Address Town is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7014 | Address Postal Code is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7015 | Address State is invalid or max length is exceeded <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7016 | Address ISO Country Code is invalid <em> [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7019 | Phone Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7020 | Mobile Number is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7050 | Page Number is invalid <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET), [List Transactions](#operation/listTransactionsUsingPOSTs)</em>
-    7051 | Max page size is exceeded <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET), [List Transactions](#operation/listTransactionsUsingPOSTs)</em>
-    7052 | Page size is invalid <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET), [List Transactions](#operation/listTransactionsUsingPOSTs)</em>
-    7063 | Payment Status is invalid <em>[List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
-    7081 | Beneficiary IBAN is invalid <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7082 | Beneficiary Bank BIC is invalid <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7083 | Beneficiary Account IBAN is required <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7084 | Beneficiary object is required <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7085 | Beneficiary Account object is required <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7086 | Beneficiary Name is required <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7087 | Beneficiary Bank BIC is required if External Account Validation is OFF <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7088 | Beneficiary Language is invalid <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7089 | Beneficiary Email is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7090 | Requested Execution Date is required <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7091 | Originator IBAN is required	 <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7092 | Payment Currency is required <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7093 | Payment Currency is invalid <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7094 | Beneficiary account is not reachable for GBP currency <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7096 | Description of Purpose is invalid or max length is exceeded <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7100 | Beneficiary Name is invalid or max length is exceeded <em>[List beneficiaries](#operation/listBeneficiariesUsingGET), [Create beneficiary](#operation/addBeneficiaryUsingPOST), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>															  
-    7111 | Originator IBAN is invalid <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7112 | Insufficient Funds <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7113 | Transfer Failed. Please try again later  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7114 | Transfer Failed. Please contact support  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7125 | Requested execution date is in the past <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7126 | Requested execution date is not a working day <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7127 | Requested execution date is today and Cut-off time has passed <em>[Create credit transfer](#operation/addCreditTransferUsingPOST)</em>	
-    7130 | Beneficiary Bank BIC is required as Beneficiary Bank is located in a NON-EEA Country <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST)</em>
-    7131 | Field is invalid or max length is exceeded <em>[Create account](#operation/addAccountUsingPOST), [List accounts](#operation/listAccountsUsingPOST), [List credit transfers](#operation/listCreditTransfersBeneficiaryUsingGET)</em>
-    7146 | Transfer not allowed for current Originator configuration. <em>[Create transfer](#operation/transferUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7148 | The Execution Date must be set to today's date. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7152 | Payment amount exceeds max allowed scheme limit. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7153 | Requested payment type is not supported by Originator. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7154 | Originator Bank BIC is required for EXPRESS payments. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7155 | Beneficiary Bank BIC is required for EXPRESS payments  <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7156 | Beneficiary account is not reachable for requested payment type <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7157 | Original transaction has not been found
-    7158 | Either originatorIban or originatorAccount object is allowed.  <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7159 | Either Iban or Domestic Account is allowed. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7160 | Domestic Bank Code is required for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7161 | Domestic Bank Code is not allowed for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7162 | Domestic Branch Code is required for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7163 | Domestic Branch Code is not allowed for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7164 | Domestic Checksum is required for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7165 | Domestic Checksum is not allowed for provided Account Country. <em>Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7167 | Credit transfer not available from this account. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7168 | Credit transfer not allowed at the moment due to account settlement. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7169 | Requested Execution Date is not far enough in the future <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7170 | End to End ID invalid, for GBP Standard payments must follow [A-Z0-9-/.& ]{0,18} <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7173 | Address Street Name is invalid or max length is exceeded
-    7174 | Address Building Number is invalid or max length is exceeded
-    7175 | Type is invalid, must be one of the allowed values from the ENUM
-    7200 | JWS-Signature header is required. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
-    7201 | JWS-Signature is invalid. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST)</em>
+    7200 | JWS-Signature header is required. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7201 | JWS-Signature is invalid. <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create credit transfer](#operation/addCreditTransferUsingPOST),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
     7203 | Field is invalid or max length is exeeded <em>Multiple endpoints.  <em>Response details.field indicates the request property the error is related to</em>
     7300 | UltimateParty Name' is invalid or max length is exceeded. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
     7301 | UltimateParty Other SchemeName Code' is Invalid. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
@@ -468,11 +391,11 @@ tags:
     7339 | UltimateDebtor PrivateId Other SchemeName either 'code' or 'proprietary' is allowed. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
     7340 | UltimateParty Other ID' is required. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
     7341 | UltimateParty PrivateId CityOfBirth' is required. <em>[Create credit transfer](#operation/addCreditTransferUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7359 | Provided Account Verification is not in a valid status, status is Pending <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7360 | Provided Account Verification is not in a valid status, status is Failed <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7361 | Failed to retrieve Account Verification, please try again later <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7362 | Account from the Account Verification does not match Beneficiary account Provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
-    7363 | Verification method must be 'ACCOUNT_HOLDER_VERIFICATION' when linking a verification to a beneficiary <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary)</em>
+    7359 | Provided Account Verification is not in a valid status, status is Pending <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7360 | Provided Account Verification is not in a valid status, status is Failed <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7361 | Failed to retrieve Account Verification, please try again later <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7362 | Account from the Account Verification does not match Beneficiary account Provided <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
+    7363 | Verification method must be 'ACCOUNT_HOLDER_VERIFICATION' when linking a verification to a beneficiary <em>[Create beneficiary](#operation/addBeneficiaryUsingPOST), [Create Credit Transfer and Beneficiary](#operation/addCreditTransferUsingPOST-and-beneficiary),  [Update beneficiary](#operation/updateBeneficiaryUsingPATCH)</em>
 - name: Pagination
   description: |-
 
@@ -682,7 +605,7 @@ paths:
                   totalElements: 1
                   totalPages: 1
                 sort: []
-        400:
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -696,7 +619,7 @@ paths:
                     field: "filter.executionDateFrom"
                     description: Date format invalid
                     resourceUri: null
-        401:
+        "401":
           description: Unauthorized
           content:
             application/json:
@@ -707,7 +630,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        403:
+        "403":
           description: Forbidden
           content:
             application/json:
@@ -718,7 +641,7 @@ paths:
                   returnCode: "10091"
                   returnDescription: Access denied
                   details: null
-        404:
+        "404":
           description: Not Found
           content:
             application/json:
@@ -729,7 +652,7 @@ paths:
                   returnCode: "10093"
                   returnDescription: Requested resource is not available
                   details: null
-        405:
+        "405":
           description: Method Not Allowed
           content:
             application/json:
@@ -740,7 +663,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        415:
+        "415":
           description: Unsupported Media Type
           content:
             application/json:
@@ -751,7 +674,7 @@ paths:
                   returnCode: null
                   returnDescription: null
                   details: null
-        422:
+        "422":
           description: Unprocessable Entity
           content:
             application/json:
@@ -765,7 +688,7 @@ paths:
                     - code: "7002"
                       description: "'From Date' must be earlier or equal to 'To Date'"
                       resourceUri: null
-        429:
+        "429":
           description: Too Many Requests
           x-sentenial:
             enriched: "true"
@@ -807,6 +730,24 @@ paths:
         description: "Name of Beneficiary. Used to filter credit transfers with provided beneficiary name, full and partial names are supported."
         schema:
           maxLength: 70
+          type: string
+      - name: domesticaccountnumber
+        in: query
+        description: Beneficiary Domestic Account Number.
+        schema:
+          maxLength: 20
+          type: string
+      - name: domesticbankcode
+        in: query
+        description: Beneficiary Domestic Account Bank Code.
+        schema: 
+          maxLength: 10
+          type: string
+      - name: domesticbranchcode
+        in: query
+        description: Beneficiary Domestic Account Branch Code.
+        schema:
+          maxLength: 10
           type: string
       - name: orderby
         in: query
@@ -1017,25 +958,31 @@ paths:
                   beneficiary:
                     name: Beneficiary Name
                     address:
-                      line1: Beneficiary Address Line1
+                      line1: Address Line1
                       line2: Beneficiary Address Line2
                       town: Beneficiary Town
                       postCode: "123123"
                       state: Beneficiary State
-                      country: IE
+                      country: GB
                     language: en
                     email: beneficiary@mail.com
                     mobileNumber: "0360321321321"
                     phoneNumber: "0360123123123"
-                    descriptionOfPurpose: Description of Purpose
+                    descriptionOfPurpose: Purpose
+                    lei: "549300V3I7L8A8E8T1D0"
+                    accountVerificationId: "jwmjjx6rmg"
                   beneficiaryAccount:
-                    iban: GB47SELN00999912345678
-                    domesticAccountNumber: "12345678"
+                    iban: "NL98RABO1812144628"
+                    bic: "RABONL2U"
+                    domesticAccountNumber: null
                     domesticBankCode: null
-                    domesticBranchCode: "009999"
+                    domesticBranchCode: null
                     domesticCheckSum: null
-                    domesticAccountCountry: GB
-                    bic: SELNGB21                    
+                    domesticAccountCountry: "NL"
+                    accountProxy: 
+                      id: null
+                      code: null
+                      proprietary: null
                   links: []
         "400":
           description: Bad Request
@@ -1226,6 +1173,175 @@ paths:
       security:
       - MerchantOAuth2:
         - beneficiaries_read
+      - MerchantApiKey: []
+    patch:
+      tags:
+      - Beneficiaries
+      summary: Update Existing Beneficiary 
+      description: A PATCH request used to update an existing beneficiary's details.
+      operationId: UpdateBeneficiaryUsingPATCH
+      parameters:
+      - name: beneficiaryId
+        in: path
+        description: Encoded ID of the beneficiary to be updated.
+        required: true
+        schema:
+          type: string 
+      - name: JWS-Signature
+        in: header
+        description: JWS-Signature
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        description: Every request will be processed only once per Idempotency-Key. The Idempotency Key will be valid for 24 hours.
+        schema:
+          maxLength: 50
+          type: string     
+      requestBody:
+        description: Update for existing beneficiary.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBeneficiaryRequestEntity'
+        required: true
+      responses:
+        "200":
+          description: OK 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestResponseEnvelopeOfUpdateBeneficiaryResponseEntity'
+              example:
+                uri: /beneficiaries/46pkx7o9n5
+                data:
+                  id: 46pkx7o9n5
+                  uri: /beneficiaries/46pkx7o9n5
+                  beneficiary:
+                    name: Updated Beneficiary Name
+                    address:
+                      line1: Address Line1
+                      line2: Beneficiary Address Line2
+                      town: Beneficiary Town
+                      postCode: "123123"
+                      state: Beneficiary State
+                      country: GB
+                    language: en
+                    email: beneficiary@mail.com
+                    mobileNumber: "0360321321321"
+                    phoneNumber: "0360123123123"
+                    descriptionOfPurpose: Purpose
+                    lei: "549300V3I7L8A8E8T1D0"
+                    accountVerificationId: "jwmjjx6rmg"
+                  beneficiaryAccount:
+                    iban: "NL98RABO1812144628"
+                    bic: "RABONL2U"
+                    domesticAccountNumber: null
+                    domesticBankCode: null
+                    domesticBranchCode: null
+                    domesticCheckSum: null
+                    domesticAccountCountry: "NL"
+                    accountProxy: 
+                      id: null
+                      code: null
+                      proprietary: null
+                  links: []
+        "400":
+              description: Bad Request
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ErrorResponse'
+                  example:
+                    returnCode: "8888" 
+                    returnDescription: "Input validation errors occurred. Please check details."
+                    details: 
+                      - code: "7100" 
+                        field: "beneficiary.name" 
+                        description: "Beneficiary Name is invalid or exceeds max length."
+                        resourceUri: null
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: "7201"
+                returnDescription: JWS-Signature is invalid.
+                details: null
+        "404":
+            description: Not Found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+                example:
+                  returnCode: "10093"
+                  returnDescription: Requested resource is not available
+                  details: null        
+        "405":
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "415":
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: "5004"
+                returnDescription: Beneficiary Country and Town are required if any other Address element is provided
+                details: null          
+        "429":
+          description: Too Many Requests
+          headers:
+            X-Rate-Limit-Reset:
+              description: Number in seconds to wait before retrying request.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                returnCode: null
+                returnDescription: null
+                details: null
+          x-sentenial:
+            enriched: "true"
+      security:
+      - MerchantOAuth2:
+        - beneficiaries
       - MerchantApiKey: []
   /beneficiaries/{beneficiaryId}/credittransfers:
     get:
@@ -1616,7 +1732,7 @@ paths:
               description: Uri to approval
               schema:
                 type: string
-          content: {}                  
+          content: {}
         "400":
           description: Bad Request
           content:
@@ -1769,7 +1885,7 @@ paths:
                     domesticBranchCode: "009999"
                     domesticCheckSum: null
                     domesticAccountCountry: GB
-                    bic: SELNGB21                    
+                    bic: SELNGB21
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: 2016-10-15
                   exportDate: 2016-10-15
@@ -1952,7 +2068,7 @@ paths:
             - PENDING
             - PENDING_SETTLEMENT
             - INITIATED
-            - FAILED            
+            - FAILED
       responses:
         "200":
           description: OK
@@ -1973,7 +2089,7 @@ paths:
                     domesticBranchCode: "009999"
                     domesticCheckSum: null
                     domesticAccountCountry: GB
-                    bic: SELNGB21                    
+                    bic: SELNGB21
                   requestedExecutionDate: 2016-10-14
                   actualExecutionDate: 2016-10-15
                   exportDate: 2016-10-15
@@ -2808,6 +2924,10 @@ components:
           $ref: '#/components/schemas/UltimatePartyEntity'
         ultimateDebtor:
           $ref: '#/components/schemas/UltimatePartyEntity'
+        accountVerificationId:
+          maxLength: 35
+          type: string
+          description: The encoded Verification ID from the Account Verification Request.
       example:
         originatorIban: GB94SELN00999976543215
         requestedExecutionDate: 2016-10-14
@@ -2868,6 +2988,12 @@ components:
           description: Beneficiary Account BIC.          
         accountProxy:
           $ref: '#/components/schemas/AccountProxy'  
+        accountType:
+          type: string
+          description: Indicates if the account is a `BUSINESS` or `PERSONAL` account. Needed for COP service usage. 
+          enum:
+            - BUSINESS
+            - PERSONAL
     BeneficiaryAddressEntity:
       type: object
       properties:
@@ -2879,14 +3005,34 @@ components:
           maxLength: 70
           type: string
           description: Beneficiary Address Line 2
+        department:
+          type: string
+          description: Identification of a division of a large organisation or building.
+          maxLength: 70
+        subDepartment:
+          type: string
+          description: Identification of a sub-division of a large organisation or building.
+          maxLength: 70        
         town:
           maxLength: 35
           type: string
           description: Beneficiary Address City/Town
+        townLocationName:
+          type: string
+          description: Specific location name within the town.
+          maxLength: 35
+        districtName:
+          type: string
+          description: Identifies a subdivision within a country sub-division (e.g., county, region).
+          maxLength: 35
         postCode:
           maxLength: 16
           type: string
           description: Beneficiary Address Post Code
+        postBox:
+          type: string
+          description: Numbered box in a post office, assigned to a person or organisation.
+          maxLength: 16
         state:
           maxLength: 35
           type: string
@@ -2898,12 +3044,24 @@ components:
           description: Two letter ISO country code.
         streetName:
           type: string
-          description: Name of a street or thoroughfare. Use the field instead or `line1` to provide name of the street. If both provided your request will be rejected.
+          description: Name of a street or thoroughfare.
           maxLength: 70
         buildingNumber:
           type: string
           description: Number that identifies the position of a building on a street.
           maxLength: 16 
+        buildingName:
+          type: string
+          description: Name of the building or house.
+          maxLength: 35
+        floor:
+          type: string
+          description: Floor or storey within a building.
+          maxLength: 70
+        room:
+          type: string
+          description: Building room number.
+          maxLength: 70
     BeneficiaryRestEntity:
       required:
       - name
@@ -2911,6 +3069,8 @@ components:
       properties:
         address:
           $ref: '#/components/schemas/BeneficiaryAddressEntity'
+        identification:
+          $ref: '#/components/schemas/PartyIdentification'
         descriptionOfPurpose:
           maxLength: 140
           type: string
@@ -2956,7 +3116,7 @@ components:
         accountVerificationId:
           maxLength: 35
           type: string
-          description: The encoded Verification ID from the Account Verification Request to link to this Beneficiary.
+          description: The encoded Verification ID from the Account Verification Request.
     CreditTransferRecallRequest:
       type: object
       properties:
@@ -2973,18 +3133,23 @@ components:
       properties:
         birthDate:
           type: string
-          description: Ultimate Creditor/Debtor Birth Date, in format YYYY-MM-DD.
+          description: Party Birth Date, in format YYYY-MM-DD.
           format: date
+        provinceOfBirth:
+          maxLength: 35
+          minLength: 1
+          type: string
+          description: Party Province of Birth
         cityOfBirth:
           maxLength: 35
           minLength: 1
           type: string
-          description: Ultimate Creditor/Debtor City of Birth
+          description: Party City of Birth
         countryOfBirth:
           maxLength: 2
           minLength: 1
           type: string
-          description: Ultimate Creditor/Debtor country of birthm ISO3166-1 alpha-2
+          description: Party country of birthm ISO3166-1 alpha-2
             country code.
     ErrorDetail:
       title: ErrorDetail
@@ -3073,15 +3238,15 @@ components:
         bicOrBei:
           pattern: "[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"
           type: string
-          description: The ultimate creditor/debtor bic.
+          description: The Party bic.
         other:
           $ref: '#/components/schemas/OtherEntity'
         lei:
           maxLength: 20
           minLength: 20
-          pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"   
+          pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"
           type: string
-          description: Beneficiary legal entity identifier      
+          description: Legal entity identifier
       description: Either 'LEI', 'BIC or BEI' or one occurrence of 'Other' is allowed.
     OtherEntity:
       required:
@@ -3092,12 +3257,12 @@ components:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other ID
+          description: Other ID
         issuer:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other Issuer
+          description: Other Issuer
         schemeName:
           $ref: '#/components/schemas/SchemeNameEntity'
     PrivateIdEntity:
@@ -3190,7 +3355,7 @@ components:
             $ref: '#/components/schemas/RestResponseLink'
         uri:
           type: string
-          description: Resource Uri
+          description: Resource Uri      
     RestResponseEnvelopeInnerOfCreditTransferResponseEntity:
       type: object
       properties:
@@ -3290,7 +3455,7 @@ components:
         accountVerificationId:
           maxLength: 35
           type: string
-          description: The encoded Verification ID from the Account Verification Request to link to this Beneficiary.
+          description: The encoded Verification ID from the Account Verification Request.
     RestResponseEnvelopeInnerOfListBeneficiaryResponseEntity:
       required:
       - beneficiary
@@ -3308,6 +3473,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RestResponseLink'
+        uri:
+          type: string
+          description: Resource Uri
+    RestResponseEnvelopeInnerOfUpdateBeneficiaryResponseEntity:
+      required:
+      - beneficiary
+      - beneficiaryAccount
+      type: object
+      properties:
+        beneficiary:
+          $ref: '#/components/schemas/BeneficiaryRestEntity'
+        beneficiaryAccount:
+          $ref: '#/components/schemas/BeneficiaryAccountIdentificationEntity'
+        id:
+          type: string
+          description: Resource Id
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestResponseLink'
+        uri:
+          type: string
+          description: Resource Uri      
+    RestResponseEnvelopeOfUpdateBeneficiaryResponseEntity:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RestResponseEnvelopeInnerOfUpdateBeneficiaryResponseEntity'
         uri:
           type: string
           description: Resource Uri
@@ -3395,12 +3588,12 @@ components:
           maxLength: 4
           minLength: 1
           type: string
-          description: Private ID Other Scheme Name Code, ENUM based on ISO external code set 'ExternalPersonIdentification1Code'.
+          description: Other Scheme Name Code, ENUM based on ISO external code set 'ExternalPersonIdentification1Code'.
         proprietary:
           maxLength: 35
           minLength: 1
           type: string
-          description: Private ID Other Scheme Name Proprietary
+          description: Other Scheme Name Proprietary
       description: One instance of 'Scheme Name Code' or 'Scheme Name Proprietary'
         is allowed.
     UltimatePartyEntity:
@@ -3414,6 +3607,82 @@ components:
           $ref: '#/components/schemas/OrganisationIdEntity'
         privateId:
           $ref: '#/components/schemas/PrivateIdEntity'
+    PartyIdentification:
+      type: object
+      properties:
+        organisationId:
+          $ref: '#/components/schemas/OrganisationIdEntity'
+        privateId:
+          $ref: '#/components/schemas/PrivateIdEntity'
+    UpdateBeneficiaryRequestEntity:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/BeneficiaryAddressEntity'
+        descriptionOfPurpose:
+          maxLength: 140
+          type: string
+          description: Purpose for the Beneficiary update
+        email:
+          maxLength: 254
+          pattern: .*@.*
+          type: string
+          description: Beneficiary Email Address
+        identification:
+          $ref: '#/components/schemas/PartyIdentification'
+        language:
+          type: string
+          description: Communication language
+          enum:
+          - en
+          - pt
+          - nl
+          - fr
+          - it
+          - es
+          - de
+          - sk
+          - fr_BE
+          - nl_BE
+        mobileNumber:
+          maxLength: 30
+          type: string
+          description: Beneficiary Mobile Number
+        name:
+          maxLength: 70
+          minLength: 1
+          type: string
+          description: Beneficiary Name
+        phoneNumber:
+          maxLength: 30
+          type: string
+          description: Beneficiary Phone Number
+        lei:
+          maxLength: 20
+          minLength: 20
+          pattern: "[A-Z0-9]{18,18}[0-9]{2,2}"          
+          type: string
+          description: Beneficiary legal entity identifier
+        accountVerificationId:
+          maxLength: 35
+          type: string
+          description: The encoded Verification ID from the Account Verification Request.
+      example:
+          name: Beneficiary Name
+          address:
+            line1: Beneficiary Address Line1
+            line2: Beneficiary Address Line2
+            town: Beneficiary Town
+            postCode: "123123"
+            state: Beneficiary State
+            country: IE
+          language: en
+          email: beneficiary@mail.com
+          phoneNumber: "0360123123123"
+          mobileNumber: "0360321321321"
+          descriptionOfPurpose: Description of Purpose
+          lei: "549300V3I7L8A8E8T1D0"
+          accountVerificationId: "jwmjjx6rmg"
     StructuredRemittanceInformation:
       type: object
       properties:
@@ -3438,40 +3707,6 @@ components:
             origix_internal: Internal Services Read Access
             incoming_instant_payments: Incoming Instant Credit Transfers Webhooks
               Access (IPM)
-    PartnerOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    PartnerApiKey:
-      type: http
-      scheme: basic
-    PartnerGroupApiKey:
-      type: http
-      scheme: basic
-    PartnerGroupOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    AdminOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
-    SystemOAuth2:
-      type: oauth2
-      flows:
-        password:
-          tokenUrl: https://api.nuapay.com/oauth/token_key
-          scopes:
-            organisation_admin: Organisation Administration access
 x-tagGroups:
 - name: Generial Info
   tags:
